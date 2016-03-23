@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/mvc      
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd  
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-3.0.xsd
+						   http://www.springframework.org/schema/tx
+						   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+						   
+		<context:component-scan base-package="com.**.controller"/>
+		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
+		       p:prefix="/WEB-INF/pages/"
+		       p:suffix=".jsp" />
+		       
+        
+		<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"
+		 p:messageConverters-ref="messageConverters"/>
+		     
+       <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+             <property name="supportedMediaTypes">
+                   <list>
+                       <value>text/plain;charset=utf-8</value>
+                   </list>
+             </property>
+       </bean>
+       <bean id="customObjectMapper" class="com.dawning.gridview.app.gridview.webapp.jedis.util.CustomObjectMapper">
+       </bean>
+       
+		<util:list id="messageConverters">
+			   <ref bean="stringHttpMessageConverter"/>
+		       <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"></bean>
+		       <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"></bean>
+		       <bean class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter"></bean>
+		       <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		            <property name="objectMapper" ref="customObjectMapper"></property>
+		       </bean>
+		</util:list>
+		      
+		<!-- <mvc:interceptors>
+		        <mvc:interceptor>
+		               <mvc:mapping path="/**/*.html"/>
+		               <bean class="com.dawning.gridview.app.gridview.webapp.jedis.interceptor.MyInterceptor"></bean>
+		        </mvc:interceptor>
+		         <mvc:interceptor>
+		               <mvc:mapping path="/**/*.html"/>
+		               <bean class="com.dawning.gridview.app.gridview.webapp.jedis.interceptor.TestInterceptor"></bean>
+		        </mvc:interceptor>
+		</mvc:interceptors> -->
+		
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"  
+		   p:defaultEncoding="UTF-8"
+		/>
+		 <!-- SpringMVC在超出上传文件限制时，会抛出org.springframework.web.multipart.MaxUploadSizeExceededException -->  
+    <!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的，而且此时还没有进入到Controller方法中 -->  
+		<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+        <property name="exceptionMappings">  
+            <props>  
+                <!-- 遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/jsp/error_fileupload.jsp页面 -->  
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error_fileupload</prop>  
+            </props>  
+        </property>  
+    </bean> 
+</beans>

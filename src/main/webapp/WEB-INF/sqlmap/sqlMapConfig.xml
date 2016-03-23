@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+<configuration>
+
+   <!-- 别名配置 -->
+   <typeAliases>
+        <typeAlias alias="student" type="com.dawning.gridview.app.gridview.webapp.jedis.po.Student"/>
+   </typeAliases>
+   <!-- 指定映射器路径 -->
+   <mappers>
+         <mapper resource="com/dawning/gridview/app/gridview/webapp/jedis/mapper/StudentDaoIMapper.xml"/>
+   </mappers>
+</configuration>

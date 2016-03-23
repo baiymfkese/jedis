@@ -1,0 +1,36 @@
+#multifile-list{
+  padding: 0;
+  margin: 0;
+  padding: 14px;
+  padding-bottom: 6px;
+  border: 1px solid #ccc;
+  background: #fefefe;
+  float: left;
+  width: 600px;
+  clear: both;
+  margin-bottom: 16px;
+}
+
+#multifile-list li{
+  padding: 0;
+  margin: 0;
+  float: left;
+  width: 100%;
+  padding-bottom: 8px;
+  list-style: none;
+  text-indent: 26px;
+  background: url("../images/icon-item.png") no-repeat;
+}
+
+#multifile-list span{
+  width: 588px;
+  float: left;
+}
+
+#multifile-list a{
+  float: left;
+  width: 12px;
+  height: 24px;
+  background: url("../images/icon-remove-item.png") 0 3px no-repeat;
+  border: 0;
+}
