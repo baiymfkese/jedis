@@ -14,7 +14,9 @@ public class MapUtilsTest {
 		// TODO Auto-generated method stub
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("age",21);
+		map.put("name","lisi");
 		System.out.println(MapUtils.getInteger(map,"age"));
+		System.out.println(MapUtils.getString(map,"name"));
 	}
 
 }
