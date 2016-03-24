@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-3.0.xsd
+						   http://www.springframework.org/schema/tx
+						   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+		
+		
+	
+		
+		<!-- 定义quartz配置文件的位置 -->
+		<!-- <context:property-placeholder location="/WEB-INF/properties/quartz.properties"/> -->
+		<util:properties id="settings" location="/WEB-INF/properties/quartz.properties"></util:properties>
+		<!-- <bean class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		        <property name="location">
+		        	<value>/WEB-INF/properties/quartz.properties</value>
+		        </property>
+    	</bean> -->
+		<context:component-scan base-package="com.**.config"/>
+		<!-- 定义任务 -->
+		<bean id="myTestJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+			<property name="name" value="my-test-job"/>
+			<property name="jobClass" value="com.dawning.gridview.app.gridview.webapp.jedis.quartz.JobBeanExecutor"/>
+			<property name="jobDataAsMap">
+				<map>
+				    <entry key="age">
+				    	<value>21</value>
+				    </entry>
+				</map>
+			</property>
+		</bean>
+		<!-- 调度触发器 -->
+		<bean id="cronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+			<property name="jobDetail" ref="myTestJob"></property>
+			<property name="cronExpression" value="*/30 *  *  *  *  ?"></property>
+		</bean>
+		<bean id="scheduleFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		     <property name="triggers">
+		        <list>
+		           <ref bean="cronTriggerBean"/>
+		        </list>
+		     </property>
+		</bean>
+</beans>

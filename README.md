@@ -1,2 +1,0 @@
-# jedis
-jedis test project
