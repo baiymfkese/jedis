@@ -46,7 +46,7 @@
 		
 		<!-- 定义任务 -->
 		<bean id="myTestJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-			<property name="name" value="my-test-job"/>
+			<property name="name" value="my-test-job-1"/>
 			<property name="jobClass" value="com.dawning.gridview.app.gridview.webapp.jedis.quartz.JobBeanExecutor"/>
 			<property name="jobDataAsMap">
 				<map>
@@ -58,9 +58,9 @@
 		<!-- 调度触发器 -->
 		<bean id="cronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 			<property name="jobDetail" ref="myTestJob"></property>
-			<property name="cronExpression" value="*/30 *  *  *  *  ?"></property>
+			<property name="cronExpression" value="*/15 *  *  *  *  ?"></property>
 			<property name="group" value="v-group"></property>
-			<property name="name" value="my-test-trigger"></property>
+			<property name="name" value="my-test-trigger-1"></property>
 		</bean>
 		<bean id="scheduleFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		     <property name="configLocation" value="/WEB-INF/properties/quartz.properties"/>
@@ -71,5 +71,6 @@
 		     </property>
 		     <property name="dataSource" ref="quartzDataSource"/>
 		     <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+		     <property name="overwriteExistingJobs" value="true"></property>
 		</bean>
 </beans>

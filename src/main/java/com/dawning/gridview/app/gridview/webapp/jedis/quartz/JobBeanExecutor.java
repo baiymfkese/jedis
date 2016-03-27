@@ -47,6 +47,8 @@ public class JobBeanExecutor extends QuartzJobBean {
 		Method method=null;
 		if(null !=target){
 			try {
+				String jobName=context.getJobDetail().getName();
+				LOGGER.info("jobName="+jobName);
 				method=target.getClass().getMethod(targetMethod, null);
 			} catch (Exception e) {
 				LOGGER.error(e);
