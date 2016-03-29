@@ -8,12 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class Config {
 
-	@Value("#{settings['quartz.name']}")
+	@Value("${dhcp.username}")
 	private String name;
 	
-	@Value("#{settings['quartz.age']}")
-	private int age;
-
+	@Value("${dhcp.password}")
+	private String pwd;
 	public String getName() {
 		return name;
 	}
@@ -22,18 +21,19 @@ public class Config {
 		this.name = name;
 	}
 
-	public int getAge() {
-		return age;
+	public String getPwd() {
+		return pwd;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
+
 	@PostConstruct
 	public void print(){
 		
 		System.out.println("----------------------******-------------");
-		System.out.println("name="+name+",age="+age);
+		System.out.println("name="+name+",pwd="+pwd);
 		System.out.println("----------------------******-------------");
 	}
 	
