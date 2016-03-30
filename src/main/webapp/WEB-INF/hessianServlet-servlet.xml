@@ -21,13 +21,16 @@
 						   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 				
 				<context:component-scan base-package="com.**.hessian"/>
-				<bean name="/helloservice" class="org.springframework.remoting.caucho.HessianServiceExporter">
+				<!-- <bean name="/helloservice" class="org.springframework.remoting.caucho.HessianServiceExporter">
 					<property name="service"  ref="helloService"/>
 					<property name="serviceInterface" value="com.dawning.gridview.app.gridview.webapp.jedis.hessian.HelloService"/>
 				</bean>  
 				<bean name="/exampleservice" class="org.springframework.remoting.caucho.HessianServiceExporter">
 					<property name="service"  ref="exampleService"/>
 					<property name="serviceInterface" value="com.dawning.gridview.app.gridview.webapp.jedis.hessian.ExampleService"/>
-				</bean>   
-		
+				</bean>  -->  
+				<bean class="com.dawning.gridview.app.gridview.webapp.jedis.hessian.RemoteServiceScanner">
+				    <property name="basePackage" value="com.**.hessian"/>
+				    <property name="proxyType" value="1"/>
+				</bean>
 </beans>
