@@ -13,7 +13,7 @@ public class PublishCxfService implements ApplicationContextAware{
 	private Class<?> serviceInterface;
 	private String simpleBeanName;
 	private ApplicationContext context=null;
-	@PostConstruct
+	@PostConstruct 
 	public void publish() throws Exception {
 		// TODO Auto-generated method stub
 		serviceObj=this.context.getBean(simpleBeanName);

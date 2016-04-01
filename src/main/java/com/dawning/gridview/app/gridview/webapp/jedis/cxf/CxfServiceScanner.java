@@ -73,7 +73,6 @@ public class CxfServiceScanner implements BeanFactoryPostProcessor,
 					ScannedGenericBeanDefinition bd=(ScannedGenericBeanDefinition)candidate;
 					bd.setBeanClassName(PublishCxfService.class.getName());
 					bd.setBeanClass(PublishCxfService.class);
-				//	bd.getPropertyValues().add("serviceObj",context.getBean(originalBeanName));
 					String[] interfaces=bd.getMetadata().getInterfaceNames();
 					if(null != interfaces && interfaces.length>0){
 						Class<?> inter=null;

@@ -7,6 +7,11 @@
   <name>jedis</name>
   <properties>
       <spring.version>3.2.3.RELEASE</spring.version>
+    <!--   <db.crm_cms.ip>127.0.0.1</db.crm_cms.ip>
+      <db.crm_cms.port>3309</db.crm_cms.port>
+      <db.liquibase.username>root</db.liquibase.username>
+      <db.liquibase.password>root123</db.liquibase.password>
+      <dhcp.driverClassName>com.mysql.jdbc.Driver</dhcp.driverClassName> -->
   </properties>
   <build>
 		<plugins>
@@ -51,10 +56,55 @@
 								</filesets>
 							</configuration>
 		           </plugin>
+		           <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <configuration>
+                    <files>
+                        <file>${basedir}/src/main/webapp/WEB-INF/properties/jdbc.properties</file>
+                    </files>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>set-properties</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.0.8</version>
+                <configuration>
+                    <changeLogFile>${basedir}/src/main/webapp/WEB-INF/liquibase/changelog.xml</changeLogFile>
+                    <!-- <defaultSchemaName>public</defaultSchemaName> -->
+                    <logging>debug</logging>
+                    <outputFileEncoding>utf-8</outputFileEncoding>
+                    <driver>${dhcp.driverClassName}</driver>
+                    <url>jdbc:mysql://${db.crm_cms.ip}:${db.crm_cms.port}/gv_local</url>
+                    <username>${db.liquibase.username}</username>
+                    <password>${db.liquibase.password}</password>
+                </configuration>
+                <executions>
+                	<execution>
+                	
+	                    <phase>process-resources</phase>
+	                    <goals>
+	                       <goal>update</goal>
+	                    </goals>
+	                    
+                	</execution>
+                </executions>
+            </plugin>
 		</plugins>
   </build>
   <dependencies>
   
+  		
         <dependency>
 		      <groupId>javax.servlet</groupId>
 			  <artifactId>servlet-api</artifactId>
@@ -63,36 +113,26 @@
 			  <optional>false</optional>
 		</dependency>
 		<dependency>
-			  <groupId>org.springframework</groupId>
-			  <artifactId>org.springframework.web.servlet</artifactId>
-			  <version>${spring.version}</version>
-			  <exclusions>
-			      <exclusion>
-			           <groupId>org.apache.commons</groupId>
-			  		   <artifactId>com.springsource.org.apache.commons.logging</artifactId>
-			      </exclusion>
-			      <exclusion>
-			             <groupId>org.aopalliance</groupId>
-			  		     <artifactId>com.springsource.org.aopalliance</artifactId>
-			      </exclusion>
-			  </exclusions>
-        </dependency>
-        <dependency>
-		  <groupId>org.springframework</groupId>
-		  <artifactId>org.springframework.jdbc</artifactId>
-		  <version>${spring.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>3.2.3.RELEASE</version>
 		</dependency>
+		 <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>3.2.3.RELEASE</version>
+		 </dependency>
+        <dependency>
+			  <groupId>org.springframework</groupId>
+			  <artifactId>spring-orm</artifactId>
+			  <version>${spring.version}</version>
+        </dependency>
         <dependency>
 		      <groupId>net.sf.json-lib</groupId>
 			  <artifactId>json-lib</artifactId>
 			  <version>2.4</version>
 			  <classifier>jdk15</classifier>
 		</dependency>
-		<dependency>
-			  <groupId>org.springframework</groupId>
-			  <artifactId>org.springframework.expression</artifactId>
-			  <version>${spring.version}</version>
-        </dependency>
         <dependency>
 		  <groupId>org.codehaus.jackson</groupId>
 		  <artifactId>jackson-mapper-asl</artifactId>
@@ -205,41 +245,7 @@
 			<artifactId>jboss-vfs</artifactId>
 			<version>3.1.0.Final</version>
 		</dependency>
-		<dependency>
-			<groupId>cKeditor</groupId>
-			<artifactId>cKeditor-java-core</artifactId>
-			<version>3.5.3</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/cKeditor-java-core-3.5.3.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>CKFinder</groupId>
-			<artifactId>CKFinder</artifactId>
-			<version>2.5.1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/CKFinder-2.5.1.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>CKFinderPlugin</groupId>
-			<artifactId>CKFinderPlugin-Watermark</artifactId>
-			<version>2.5.1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/CKFinderPlugin-Watermark-2.5.1.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>CKFinderPlugin</groupId>
-			<artifactId>CKFinderPlugin-ImageResize</artifactId>
-			<version>2.5.1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/CKFinderPlugin-ImageResize-2.5.1.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>CKFinderPlugin</groupId>
-			<artifactId>CKFinderPlugin-FileEditor</artifactId>
-			<version>2.5.1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/CKFinderPlugin-FileEditor-2.5.1.jar</systemPath>
-		</dependency>
+		
 		 <dependency>
           	<groupId>org.aspectj</groupId>
 	        <artifactId>aspectjweaver</artifactId>
@@ -310,10 +316,38 @@
 			    </exclusion>
 			</exclusions>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-databinding-aegis</artifactId>
-			<version>2.7.15</version>
-		</dependency> -->
+		<dependency>
+			  <groupId>org.apache.activemq</groupId>
+			  <artifactId>activemq-all</artifactId>
+			  <version>5.8.0</version>
+			  <exclusions>
+			      <exclusion>
+			          <groupId>org.apache.activemq</groupId>
+			          <artifactId>activemq-amqp</artifactId>
+			      </exclusion>
+			      <exclusion>
+			          <groupId>org.apache.activemq</groupId>
+			          <artifactId>activemq-broker</artifactId>
+			      </exclusion>
+			      <exclusion>
+			          <groupId>org.apache.activemq</groupId>
+			          <artifactId>activemq-client</artifactId>
+			      </exclusion>
+			       <exclusion>
+			          <groupId>org.apache.activemq</groupId>
+			          <artifactId>activemq-openwire-legacy</artifactId>
+			      </exclusion>
+			  </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-pool</artifactId>
+			<version>5.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>3.0.8</version>
+		</dependency>
   </dependencies>
 </project>

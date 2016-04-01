@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <preConditions>
+        <dbms type="mysql" />
+    </preConditions>
+
+	
+	
+    <changeSet id="1" author="xiaoming">
+        <comment>create table teacher</comment>
+        <createTable tableName="gv_teacher">
+           <column name="id" type="int"/>
+           <column name="age" type="int"/>
+           <column name="name" type="varchar(32)"/>
+          
+        </createTable>
+    </changeSet>
+     <changeSet id="1_1" author="xiaoming">
+     	<addColumn tableName="gv_teacher">
+     		 <column name="hobby" type="varchar(64)"/>
+     	</addColumn>
+     </changeSet>
+     <changeSet id="1_2" author="xiaoming">
+     	<modifyDataType tableName="gv_teacher" columnName="name" newDataType="varchar(64)"></modifyDataType>
+     </changeSet>
+     <changeSet id="2" author="chen">
+     	<sql>insert into gv_teacher(id,age,name,hobby) values(1,23,'陈四','basketball')</sql>
+     </changeSet>
+     <changeSet id="3" author="chen">
+     	<sql>
+     	  insert into gv_teacher(id,age,name,hobby) values(2,23,'bai','basketball');
+     	  insert into gv_teacher(id,age,name,hobby) values(3,23,'chensi','volleyball');
+     	  insert into gv_teacher(id,age,name,hobby) values(4,23,'wang','basketball');
+     	</sql>
+     </changeSet>
+     <changeSet id="4" author="chen">
+     
+     		<addPrimaryKey tableName="gv_teacher" columnNames="id"/>
+     		<createIndex tableName="gv_teacher" indexName="name_index">
+     		  <column name="name"></column>
+     		</createIndex>
+     		
+     </changeSet>
+     <changeSet id="5-5" author="chen">
+     	<addAutoIncrement tableName="gv_teacher" columnName="id" columnDataType="int"/>
+     </changeSet>
+     <changeSet id="5-6" author="chen">
+      	<sql>
+      	   delete from gv_teacher where id=1;
+      	</sql>
+      </changeSet>
+      <changeSet id="5-7" author="chen">
+      	<dropColumn tableName="gv_teacher" columnName="hobby"/>
+      </changeSet>
+    <!--  <includeAll path="v/*"/> -->
+    <includeAll path="/src/main/webapp/WEB-INF/liquibase/v"/>
+</databaseChangeLog>

@@ -19,7 +19,7 @@
 		
 		
 		 <aop:aspectj-autoproxy/>
-		 <context:component-scan base-package="com.**.service,com.**.ds"/>
+		 <context:component-scan base-package="com.**.service,com.**.ds,com.**.shiro"/>
 		 	
 		<!-- 定义数据库配置文件的位置 -->
 		<!-- <context:property-placeholder location="/WEB-INF/properties/jdbc.properties"/> -->
@@ -110,4 +110,7 @@
 			<!-- 引用quartz配置 -->
 	<!-- 	<import resource="../quartz.xml"/> -->
 		<import resource="../cxf-spring.xml"/>
+		<import resource="../activemq-spring.xml"/>
+		<import resource="../liquibase-spring.xml"/>
+		<bean class="com.dawning.gridview.app.gridview.webapp.jedis.shiro.ShiroTest"/>
 </beans>

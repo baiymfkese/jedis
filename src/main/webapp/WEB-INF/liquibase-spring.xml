@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/mvc      
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd  
+                           http://cxf.apache.org/jaxws 
+    					   http://cxf.apache.org/schemas/jaxws.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-3.0.xsd
+						   http://www.springframework.org/schema/tx
+						   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+			
+ 			    
+ 			    
+ 		<bean id="liquibaseDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+            destroy-method="close">
+			<property name="driverClassName" value="${dhcp.driverClassName}" />
+			<property name="url" value="jdbc:mysql://${db.crm_cms.ip}:${db.crm_cms.port}/gv_local" />
+			<property name="username" value="${db.liquibase.username}" />
+			<property name="password" value="${db.liquibase.password}" />
+		</bean>	    
+ 		<bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase" >
+ 			<property name="dataSource" ref="liquibaseDataSource"></property>
+ 			<property name="changeLog" value="/WEB-INF/liquibase/changelog.xml"></property>
+ 		</bean>	    
+ 			    
+ 			    
+ 			    
+ 			    
+</beans>

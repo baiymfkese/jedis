@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog ../dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+	<property name="name" value="order_name" dbms="mysql"/>
+	<property name="length" value="64" dbms="mysql"/>
+
+    <preConditions>
+        <dbms type="mysql" />
+    </preConditions>
+    
+	
+	
+    <changeSet id="1" author="zhaoqiang">
+        <comment>create table order</comment>
+        <createTable tableName="gv_order">
+           <column name="id" type="int"/>
+           <column name="${name}" type="varchar(${length})"/>
+        </createTable>
+    </changeSet>
+   
+</databaseChangeLog>
