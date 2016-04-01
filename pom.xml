@@ -7,11 +7,6 @@
   <name>jedis</name>
   <properties>
       <spring.version>3.2.3.RELEASE</spring.version>
-    <!--   <db.crm_cms.ip>127.0.0.1</db.crm_cms.ip>
-      <db.crm_cms.port>3309</db.crm_cms.port>
-      <db.liquibase.username>root</db.liquibase.username>
-      <db.liquibase.password>root123</db.liquibase.password>
-      <dhcp.driverClassName>com.mysql.jdbc.Driver</dhcp.driverClassName> -->
   </properties>
   <build>
 		<plugins>
@@ -89,7 +84,7 @@
                     <username>${db.liquibase.username}</username>
                     <password>${db.liquibase.password}</password>
                 </configuration>
-                <executions>
+                <!-- <executions>
                 	<execution>
                 	
 	                    <phase>process-resources</phase>
@@ -98,7 +93,7 @@
 	                    </goals>
 	                    
                 	</execution>
-                </executions>
+                </executions> -->
             </plugin>
 		</plugins>
   </build>
