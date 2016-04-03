@@ -45,12 +45,12 @@ public class RemoteServiceScanner implements BeanFactoryPostProcessor,
 
 	public void afterPropertiesSet() throws Exception {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void postProcessBeanFactory(
 			ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		// TODO Auto-generated method stub
+		System.out.println("this.applicationContext="+this.applicationContext);
 		BeanDefinitionRegistry tempRegistry=(BeanDefinitionRegistry)beanFactory;
 		Scanner scanner=new Scanner(tempRegistry,this.rpcBeanNameAnnotation);
 		scanner.scan(StringUtils.tokenizeToStringArray(this.basePackage,ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
@@ -97,16 +97,6 @@ public class RemoteServiceScanner implements BeanFactoryPostProcessor,
 					definitionHolder=this.applyScopedProxyMode(scopeMetadata, definitionHolder, registry);
 					beanDefinitions.add(definitionHolder);
 					registerBeanDefinition(definitionHolder, registry);
-				}
-			}
-			if(CollectionUtils.isEmpty(beanDefinitions)){
-				System.out.println("no service be scanned.");
-			}else{
-				for(BeanDefinitionHolder holder:beanDefinitions){
-					
-					AnnotatedBeanDefinition definition=(AnnotatedBeanDefinition)(holder.getBeanDefinition());
-					System.out.println(holder.getBeanName());
-					System.out.println(definition.getMetadata().getAnnotationTypes());
 				}
 			}
 			return beanDefinitions;

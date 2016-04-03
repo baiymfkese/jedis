@@ -19,10 +19,7 @@ public abstract class BaseScanner extends ClassPathBeanDefinitionScanner {
 	public BeanDefinitionRegistry registry;
 	public final static String HTTPINVOKER="0";
 	public final static String HESSIAN="1";
-	public BaseScanner(BeanDefinitionRegistry registry) {
-		super(registry);
-		// TODO Auto-generated constructor stub
-	}
+	
 	public BaseScanner(BeanDefinitionRegistry registry,String rpcBeanNameAnnotation) {
 		super(registry);
 		this.registry=registry;
