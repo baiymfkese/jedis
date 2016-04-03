@@ -50,7 +50,6 @@ public class RemoteServiceScanner implements BeanFactoryPostProcessor,
 	public void postProcessBeanFactory(
 			ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		// TODO Auto-generated method stub
-		System.out.println("this.applicationContext="+this.applicationContext);
 		BeanDefinitionRegistry tempRegistry=(BeanDefinitionRegistry)beanFactory;
 		Scanner scanner=new Scanner(tempRegistry,this.rpcBeanNameAnnotation);
 		scanner.scan(StringUtils.tokenizeToStringArray(this.basePackage,ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));

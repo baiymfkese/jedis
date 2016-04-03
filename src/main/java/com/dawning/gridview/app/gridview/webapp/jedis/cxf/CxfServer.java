@@ -1,10 +1,13 @@
 package com.dawning.gridview.app.gridview.webapp.jedis.cxf;
 
-import org.apache.cxf.frontend.ServerFactoryBean;
-import org.apache.log4j.Logger;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
-import com.dawning.gridview.app.gridview.webapp.jedis.config.WebServiceConfig;
-import com.dawning.gridview.app.gridview.webapp.jedis.util.ApplicationContextHelp;
+import org.apache.cxf.frontend.ServerFactoryBean;
+
+import com.dawning.gridview.app.gridview.webapp.jedis.util.PropertiesTool;
+
 
 /**
  * 发布cxf服务
@@ -13,19 +16,42 @@ import com.dawning.gridview.app.gridview.webapp.jedis.util.ApplicationContextHel
  */
 public class CxfServer {
 
-	private static final Logger LOGGER=Logger.getLogger(CxfServer.class);
-
+	private static String ip="0.0.0.0";
+	private static String port="9090";
+	static{
+		Properties pro=null;
+		InputStream in=PropertiesTool.getSpecifiedInputStreamOfWEBINF("properties/webservice.properties");
+		if(null != in){
+			
+			pro=new Properties();
+			try {
+				pro.load(in);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ip=pro.getProperty("WEBSERVICE_IP");
+			port=pro.getProperty("WEBSERVICE_PORT");
+			
+		}
+	}
 	public static void publishWebService(Object obj,Class<?> clazz,String beanName){
 		
-		WebServiceConfig config=ApplicationContextHelp.getInstance().getBean("webServiceConfig");
-		System.out.println("config="+config);
-		LOGGER.info("开始发布webservice.......");
+		StringBuilder sb=new StringBuilder("http://");
+		sb.append(ip).append(":").append(port).append("/");
+		sb.append(beanName);
 		ServerFactoryBean serverFactoryBean=new ServerFactoryBean();
-		serverFactoryBean.setAddress("http://0.0.0.0:9999/"+beanName);
+		serverFactoryBean.setAddress(sb.toString());
 		serverFactoryBean.setServiceClass(clazz);
 		serverFactoryBean.setServiceBean(obj);
 		serverFactoryBean.create();
-		LOGGER.info("发布webservice成功.......");
 		
 	}
+	public static void setIp(String ip) {
+		CxfServer.ip = ip;
+	}
+	public static void setPort(String port) {
+		CxfServer.port = port;
+	}
+	
 }

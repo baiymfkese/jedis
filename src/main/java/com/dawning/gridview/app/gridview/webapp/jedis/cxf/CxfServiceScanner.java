@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.stereotype.Service;
 
+import com.dawning.gridview.app.gridview.webapp.jedis.config.WebServiceConfig;
 import com.dawning.gridview.app.gridview.webapp.jedis.hessian.BaseScanner;
 
 /**

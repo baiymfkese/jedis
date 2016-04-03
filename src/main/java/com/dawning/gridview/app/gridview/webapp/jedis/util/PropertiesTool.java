@@ -23,8 +23,6 @@ public static InputStream getSpecifiedInputStreamOfWEBINF(String path){
 	    	
 	    	resultPath=prefixPath+File.separator+path;
 	    }
-		System.out.println("read file full path is:"+resultPath);
-		
 		try {
 			return new FileInputStream(new File(resultPath));
 		} catch (FileNotFoundException e) {

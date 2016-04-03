@@ -1,6 +1,7 @@
 package com.dawning.gridview.app.gridview.webapp.jedis.config;
 
 
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,17 +18,11 @@ public class WebServiceConfig {
 		return ip;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
 
 	public String getPort() {
 		return port;
 	}
 
-	public void setPort(String port) {
-		this.port = port;
-	}
 	
 	
 	
