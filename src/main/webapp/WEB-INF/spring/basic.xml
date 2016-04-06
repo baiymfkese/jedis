@@ -18,8 +18,9 @@
 						   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 		
 		
-		<aop:aspectj-autoproxy/>
-		<context:component-scan base-package="com.**.service,com.**.ds,com.**.config"/>
+		 <aop:aspectj-autoproxy/>
+		 <context:component-scan base-package="com.**.service,com.**.ds"/>
+		 	
 		<!-- 定义数据库配置文件的位置 -->
 		<!-- <context:property-placeholder location="/WEB-INF/properties/jdbc.properties"/> -->
 		<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -30,9 +31,11 @@
 				  </list>
 			  </property>
 		 </bean>
-		<!-- 引用quartz配置 -->
-		<import resource="../quartz.xml"/>
-		<import resource="../cxf-spring.xml"/>
+		 <bean id="webServiceConfig" class="com.dawning.gridview.app.gridview.webapp.jedis.config.WebServiceConfig">
+		      <property name="ip" value="${WEBSERVICE_IP}"/>
+		      <property name="port" value="${WEBSERVICE_PORT}"/>
+		 </bean>
+		
 		<!-- 数据库连接池配置信息 -->
 		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
             destroy-method="close">
@@ -104,5 +107,7 @@
          <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
  				 <property name="basePackage" value="com.dawning.gridview.app.gridview.webapp.jedis.mapper" />
 		 </bean>
-	
+			<!-- 引用quartz配置 -->
+	<!-- 	<import resource="../quartz.xml"/> -->
+		<import resource="../cxf-spring.xml"/>
 </beans>

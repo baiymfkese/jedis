@@ -12,11 +12,14 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.ScannedGenericBeanDefinition;
 import org.springframework.context.annotation.ScopeMetadata;
+import org.springframework.remoting.caucho.HessianServiceExporter;
+import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 import org.springframework.stereotype.Service;
 
-import com.dawning.gridview.app.gridview.webapp.jedis.config.WebServiceConfig;
 import com.dawning.gridview.app.gridview.webapp.jedis.hessian.BaseScanner;
+import com.dawning.gridview.app.gridview.webapp.jedis.webservice.soap.OrderManagerServiceI;
 
 /**
  * 
@@ -46,6 +49,7 @@ public class CxfServiceScanner implements BeanFactoryPostProcessor,
 		// TODO Auto-generated method stub
 		BeanDefinitionRegistry registry=(BeanDefinitionRegistry)beanFactory;
 		Scanner scanner=new Scanner(registry,this.rpcBeanNameAnnotation);
+		scanner.setResourceLoader(this.context);
 		scanner.scan(basePackage);
 	}
 	private class Scanner extends BaseScanner{
@@ -66,10 +70,22 @@ public class CxfServiceScanner implements BeanFactoryPostProcessor,
 					ScopeMetadata scopeMetadata=this.scopeMetadataResolver.resolveScopeMetadata(candidate);
 					candidate.setScope(scopeMetadata.getScopeName());
 					String originalBeanName=this.beanNameGenerator.generateBeanName(candidate, registry);
-					Object obj=context.getBean(originalBeanName);
-					Class<?>[] clazzes=obj.getClass().getInterfaces();
-					CxfServer.publishWebService(obj, clazzes[0],originalBeanName);
-					BeanDefinitionHolder definitionHolder=new BeanDefinitionHolder(candidate,originalBeanName);
+					ScannedGenericBeanDefinition bd=(ScannedGenericBeanDefinition)candidate;
+					bd.setBeanClassName(PublishCxfService.class.getName());
+					bd.setBeanClass(PublishCxfService.class);
+				//	bd.getPropertyValues().add("serviceObj",context.getBean(originalBeanName));
+					String[] interfaces=bd.getMetadata().getInterfaceNames();
+					if(null != interfaces && interfaces.length>0){
+						Class<?> inter=null;
+						try {
+							inter=Class.forName(interfaces[0]);
+						} catch (ClassNotFoundException e) {
+							continue;
+						}
+						bd.getPropertyValues().add("serviceInterface",inter);
+					}
+					bd.getPropertyValues().add("simpleBeanName",originalBeanName);
+					BeanDefinitionHolder definitionHolder=new BeanDefinitionHolder(candidate,"_"+originalBeanName);
 					definitionHolder=this.applyScopedProxyMode(scopeMetadata, definitionHolder, registry);
 					beanDefinitions.add(definitionHolder);
 					registerBeanDefinition(definitionHolder, registry);

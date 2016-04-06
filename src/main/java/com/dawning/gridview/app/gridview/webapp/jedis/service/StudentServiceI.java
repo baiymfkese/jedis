@@ -20,4 +20,5 @@ public interface StudentServiceI {
 	
 	public void deleteStudent(Serializable id);
 	
+	public void init();
 }

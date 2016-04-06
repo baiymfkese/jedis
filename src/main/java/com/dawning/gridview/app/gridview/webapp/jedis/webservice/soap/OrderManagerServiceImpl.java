@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.dawning.gridview.app.gridview.webapp.jedis.mapper.StudentDaoIMapper;
+import com.dawning.gridview.app.gridview.webapp.jedis.service.MyService;
 
 /**
  * 订单管理服务实现类
@@ -15,6 +19,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderManagerServiceImpl implements OrderManagerServiceI {
 
+	@Autowired
+	private StudentDaoIMapper studentMapper;
+	@Autowired
+	private MyService myservice=null;
 	private static  List<Order> originalList=new ArrayList<Order>();
 	static{
 		Order order = new Order("1",1,"张三");
@@ -30,7 +38,7 @@ public class OrderManagerServiceImpl implements OrderManagerServiceI {
 		// TODO Auto-generated method stub
 		System.out.println("originalList'size="+originalList.size());
 		Order order=originalList.get(0);
-		System.out.println("服务端order="+order);
+		System.out.println("服务端order="+order+",myservice="+myservice);
 		return order;
 	}
 
@@ -54,4 +62,7 @@ public class OrderManagerServiceImpl implements OrderManagerServiceI {
 		return originalList.toArray(new Order[0]);
 	}
 
+	public StudentDaoIMapper getStudentMapper() {
+		return studentMapper;
+	}
 }

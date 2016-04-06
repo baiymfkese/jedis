@@ -3,6 +3,8 @@ package com.dawning.gridview.app.gridview.webapp.jedis.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +18,17 @@ public class StudentServiceImpl implements StudentServiceI {
 	@Autowired
 	private StudentDaoIMapper studentMapper;
 	
+	public void init(){
+		System.out.println("**************************"+studentMapper);
+	}
 	public List<Student> getStudentList() {
 		// TODO Auto-generated method stub
+		System.out.println("studentMapper="+studentMapper);
 		return studentMapper.getStudentList();
 	}
 
 	public Student getStudentById(Serializable id) {
+		System.out.println("studentMapper="+studentMapper);
 		// TODO Auto-generated method stub
 		return studentMapper.getStudentById(id);
 	}

@@ -22,9 +22,8 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd
 						   http://www.springframework.org/schema/tx
 						   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
-				
- 			    <context:component-scan base-package="com.dawning.gridview.app.gridview.webapp.jedis.webservice.soap"></context:component-scan>
- 			    <bean class="com.dawning.gridview.app.gridview.webapp.jedis.cxf.CxfServiceScanner">
- 			       <property name="basePackage" value="com.dawning.gridview.**.webservice.soap"/>
+			
+ 			     <bean class="com.dawning.gridview.app.gridview.webapp.jedis.cxf.CxfServiceScanner">
+ 			       <property name="basePackage" value="com.dawning.gridview.**.service.impl"/>
  			    </bean>
 </beans>
